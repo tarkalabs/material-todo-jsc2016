@@ -1,0 +1,38 @@
+html {
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+html {
+    overflow: hidden;
+    height: 100%;
+}
+
+body {
+    height: 100%;
+    overflow: auto;
+}
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.example-enter {
+  transform: perspective(500px) translate3d(500px,0,0);
+}
+
+.example-enter.example-enter-active {
+  transform: translate3d(0,0,0);
+  transition: transform 500ms ease-in;
+}
+
+.example-leave {
+  transform: translate3d(0,0,0);
+}
+
+.example-leave.example-leave-active {
+  transform: perspective(500px) translate3d(-500px,0,0);
+  transition: transform 300ms ease-in;
+}
