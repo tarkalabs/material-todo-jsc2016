@@ -1,6 +1,7 @@
 import React from 'react';
 import AppBar from 'material-ui/AppBar';
-import { browserHistory } from 'react-router';
+// import { browserHistory } from 'react-router';
+import navigateTo from '../../actions/path';
 import { Tabs, Tab } from 'material-ui/Tabs';
 import { List, ListItem } from 'material-ui/List';
 import Toggle from 'material-ui/Toggle';
@@ -33,6 +34,7 @@ class AppShell extends React.Component {
   render() {
     const [ALL_INDEX, PENDING_INDEX, COMPLETED_INDEX] = [0, 1, 2];
     let selectedIndex = ALL_INDEX;
+    console.log(this.props.filter);
     if (this.props.filter) {
       selectedIndex = this.props.filter === 'pending' ? PENDING_INDEX : COMPLETED_INDEX;
     }
@@ -47,13 +49,13 @@ class AppShell extends React.Component {
           title="JSChannel Tasks"
           iconClassNameRight="muidocs-icon-navigation-expand-more"
         />
-        <Tabs initialSelectedIndex={selectedIndex}>
-          <Tab label="all" onActive={() => browserHistory.push('/tasks')} />
-          <Tab label="pending" onActive={() => browserHistory.push('/tasks/pending')} />
-          <Tab label="completed" onActive={() => browserHistory.push('/tasks/completed')} />
+        <Tabs value={selectedIndex}>
+          <Tab value={0} label="all" onActive={() => navigateTo('/tasks')} />
+          <Tab value={1} label="pending" onActive={() => navigateTo('/tasks/pending')} />
+          <Tab value={2} label="completed" onActive={() => navigateTo('/tasks/completed')} />
         </Tabs>
         {this.props.children}
-        <FloatingActionButton style={fabStyle} onClick={() => browserHistory.push('/new')}>
+        <FloatingActionButton style={fabStyle} onClick={() => navigateTo('/new')}>
           <ContentAdd />
         </FloatingActionButton>
       </div>
@@ -76,7 +78,7 @@ class Home extends React.Component {
     }
 
     return (
-      <AppShell tasks={taskList} filter={filter}>
+      <AppShell filter={filter}>
         <List>
           {taskList.map((t) => <TaskItem task={t} key={t.get('id')} />)}
         </List>

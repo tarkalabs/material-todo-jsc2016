@@ -5,12 +5,12 @@ import RaisedButton from 'material-ui/RaisedButton';
 import DatePicker from 'material-ui/DatePicker';
 import component from '../component';
 import { setDraftDueDate, setDraftLabel, saveDraft } from '../../actions/DraftActions';
-import { browserHistory } from 'react-router';
+import navigateTo from '../../actions/path';
 
 // can be refactored to presenters based on cursors
 function saveEntry(draft) {
   if (saveDraft(draft)) {
-    browserHistory.push('/');
+    navigateTo('/tasks');
   }
 }
 
