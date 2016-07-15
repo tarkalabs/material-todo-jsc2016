@@ -7,12 +7,14 @@ import component from '../component';
 import { setDraftDueDate, setDraftLabel, saveDraft } from '../../actions/DraftActions';
 import { browserHistory } from 'react-router';
 
-function saveEntry() {
-  saveDraft();
-  browserHistory.push('/');
+// can be refactored to presenters based on cursors
+function saveEntry(draft) {
+  if (saveDraft(draft)) {
+    browserHistory.push('/');
+  }
 }
 
-function NewTask(props) {
+const NewTask = ({ draft }) => {
   let contentStyle = { padding: 8 };
   return (
     <div>
@@ -24,23 +26,27 @@ function NewTask(props) {
         <TextField
           hintText="What do you want to do?"
           fullWidth
-          value = {props.label.deref()}
+          value={draft.get('label') || ''}
+          errorText={draft.getIn(['errors', 'label'])}
           onChange={(_, newVal) => setDraftLabel(newVal)}
           floatingLabelText="Task Description"
         />
         <DatePicker
           hintText="Due on"
           fullWidth
-          value = {props.due.deref()}
+          value={draft.get('due')}
           onChange={(_, dt) => setDraftDueDate(dt)}
         />
-        <RaisedButton primary label="Save" onClick={saveEntry} />
+        <RaisedButton primary label="Save" onClick={() => saveEntry(draft)} />
       </div>
     </div>
   );
-}
+};
+
+NewTask.propTypes = {
+  draft: React.PropTypes.object.isRequired,
+};
 
 export default component(NewTask, {
-  label: ['state', 'draft', 'label'],
-  due: ['state', 'draft', 'due'],
+  draft: ['state', 'draft'],
 });

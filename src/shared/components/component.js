@@ -1,12 +1,13 @@
-import _ from "lodash";
-import React from "react";
+import _ from 'lodash';
+import React from 'react';
 
-import appState from "../stores/app_state";
+import appState from '../stores';
+import shouldComponentUpdate from '../helpers/should_component_update';
 
 export default function component(ParentComponent, paths) {
   return React.createClass({
-    displayName: "component",
-
+    displayName: 'component',
+    shouldComponentUpdate: shouldComponentUpdate,
     render: function() {
       var isComputed = (pitem) => /^computed/i.test(pitem);
       var hasComputed = (path) => _.some(path, isComputed);

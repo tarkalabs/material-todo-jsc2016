@@ -14,7 +14,7 @@ if (typeof(window) !== 'undefined') {
   window.browserHistory = browserHistory;
 }
 
-function App({ children, location }) {
+function App({ children }) {
   return (
     <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
       <ReactCSSTransitionGroup
@@ -23,9 +23,7 @@ function App({ children, location }) {
         transitionEnterTimeout={500}
         transitionLeaveTimeout={500}
       >
-        {React.cloneElement(children, {
-          key: location.pathname,
-        })}
+        {children}
       </ReactCSSTransitionGroup>
     </MuiThemeProvider>
   );

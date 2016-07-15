@@ -1,5 +1,8 @@
-import appState from '../stores/app_state';
-import { List, Map } from 'immutable';
+import appState from '../stores';
+import Immutable, { Map } from 'immutable';
+import uuid from 'node-uuid';
+import moment from 'moment';
+import _ from 'lodash';
 
 const draftCursor = () => appState.cursor(['state', 'draft']);
 const tasksCursor = () => appState.cursor(['state', 'tasks']);
@@ -12,12 +15,26 @@ export function setDraftLabel(newVal) {
   draftCursor().cursor('label').update(() => newVal);
 }
 
-export function saveDraft() {
-  const draftObj = draftCursor().deref();
-  if (tasksCursor().deref()) {
-    tasksCursor().update((curr) => curr.push(draftObj));
-    draftCursor().update(() => Map());
-  } else {
-    tasksCursor().update(() => List().push(draftObj))
+export function validateDraft(draft) {
+  if (_.isEmpty(draft.get('label'))) {
+    const labelError = Immutable.fromJS({ errors: { label: 'Label should not be empty' } });
+    draft.update((d) => d.merge(labelError));
+    return false;
   }
+  return true;
+}
+
+export function saveDraft(draft) {
+  const draftObj = draft.deref()
+  .set('id', uuid.v4())
+  .set('created_at', moment().unix())
+  .set('done', false);
+  if (!validateDraft(draft)) return false;
+  if (tasksCursor().deref()) {
+    tasksCursor().update((curr) => curr.set(draftObj.get('id'), draftObj));
+  } else {
+    tasksCursor().update(() => new Map().set(draftObj.get('id'), draftObj));
+  }
+  draft.update(() => new Map());
+  return true;
 }
