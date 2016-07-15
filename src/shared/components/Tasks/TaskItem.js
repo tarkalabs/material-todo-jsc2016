@@ -23,3 +23,5 @@ class TaskItem extends React.Component {
 TaskItem.propTypes = {
   task: React.PropTypes.object.isRequired,
 };
+
+export default TaskItem;

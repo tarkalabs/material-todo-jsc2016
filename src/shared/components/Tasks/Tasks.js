@@ -16,7 +16,6 @@ class Tasks extends React.Component {
       const condition = filter === 'pending' ? (t) => !t.get('done') : (t) => t.get('done');
       taskList = taskList.filter(condition);
     }
-
     return (
       <AppShell filter={filter}>
         <List>

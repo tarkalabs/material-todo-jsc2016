@@ -17,7 +17,7 @@ export function setDraftLabel(newVal) {
 
 export function validateDraft(draft) {
   if (_.isEmpty(draft.get('desc'))) {
-    const descError = Immutable.fromJS({ errors: { desc: 'Label should not be empty' } });
+    const descError = Immutable.fromJS({ errors: { desc: 'Description should not be empty' } });
     draft.update((d) => d.merge(descError));
     return false;
   }
