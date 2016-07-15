@@ -14,9 +14,6 @@ injectTapEventPlugin();
 const container = document.getElementById('app');
 
 function renderApp() {
-  //if (window.location.pathname !== appState(['state', 'path']).deref()) {
-    //browserHistory.push(appState(['state', 'path']).deref());
-  //}
   // As we are using dynamic react-router routes we have to use the following
   // asynchronous routing mechanism supported by the `match` function.
   // @see https://github.com/reactjs/react-router/blob/master/docs/guides/ServerRendering.md
@@ -53,7 +50,6 @@ renderApp();
 appState.on('swap', () => {
   const path = appState.cursor(['state', 'path']).deref();
   if (path && path !== location.pathname) {
-    console.log("Will navigate to " + path);
     browserHistory.push(path);
   } else {
     renderApp();
