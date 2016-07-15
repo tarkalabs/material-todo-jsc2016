@@ -26,8 +26,8 @@ const NewTask = ({ draft }) => {
         <TextField
           hintText="What do you want to do?"
           fullWidth
-          value={draft.get('label') || ''}
-          errorText={draft.getIn(['errors', 'label'])}
+          value={draft.get('desc') || ''}
+          errorText={draft.getIn(['errors', 'desc'])}
           onChange={(_, newVal) => setDraftLabel(newVal)}
           floatingLabelText="Task Description"
         />

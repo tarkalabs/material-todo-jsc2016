@@ -12,13 +12,13 @@ export function setDraftDueDate(newVal) {
 }
 
 export function setDraftLabel(newVal) {
-  draftCursor().cursor('label').update(() => newVal);
+  draftCursor().cursor('desc').update(() => newVal);
 }
 
 export function validateDraft(draft) {
-  if (_.isEmpty(draft.get('label'))) {
-    const labelError = Immutable.fromJS({ errors: { label: 'Label should not be empty' } });
-    draft.update((d) => d.merge(labelError));
+  if (_.isEmpty(draft.get('desc'))) {
+    const descError = Immutable.fromJS({ errors: { desc: 'Label should not be empty' } });
+    draft.update((d) => d.merge(descError));
     return false;
   }
   return true;

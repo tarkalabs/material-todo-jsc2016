@@ -14,7 +14,7 @@ class TaskItem extends React.Component {
   render() {
     return (
       <ListItem
-        primaryText={this.props.task.get('label')}
+        primaryText={this.props.task.get('desc')}
         rightToggle={
           <Toggle
             toggled={this.props.task.get('done')}
